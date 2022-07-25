@@ -23,7 +23,7 @@ class App extends Component {
   onChange = ({ target }) => {
     const { name } = target;
     const value = (target.type === 'checkbox') ? target.checked : target.value;
-    this.setState({
+    this.state({
       [name]: value,
     });
   }
