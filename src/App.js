@@ -7,24 +7,13 @@ class App extends Component {
     super();
     this.state = {
       cardName: '',
-      cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
-      cardImage: '',
-      cardRare: '',
-      cardTrunfo: false,
-      // hasTrunfo: false,
-      isSaveButtonDisabled: false,
-      onInputChange: this.onChange,
-      onSaveButtonClick: this.ButtonClick,
     };
   }
 
   onChange = ({ target }) => {
     const { name } = target;
     const value = (target.type === 'checkbox') ? target.checked : target.value;
-    this.state({
+    this.setState({
       [name]: value,
     });
   }
@@ -35,11 +24,12 @@ class App extends Component {
   };
 
   render() {
+    const { cardName } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
-        <Form value={ this.state } />
-        <Card value={ this.state } />
+        <Form value={ cardName } onInputChange={ this.onChange } />
+        <Card { ...this.state } />
       </div>
     );
   }
