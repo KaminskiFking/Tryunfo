@@ -25,8 +25,28 @@ class App extends Component {
 
   ButtonClick = (event) => {
     event.preventDefault();
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    } = this.state;
 
-    this.setState((prevState) => ({ saveList: [...prevState.saveList],
+    const objUpdate = {
+      nome: cardName,
+      descriçao: cardDescription,
+      imagem: cardImage,
+      attr1: cardAttr1,
+      attr2: cardAttr2,
+      attr3: cardAttr3,
+      raro: cardRare,
+      trunfo: cardTrunfo,
+    };
+    this.setState((prevState) => ({ saveList: [...prevState.saveList, objUpdate],
       cardName: '',
       cardDescription: '',
       cardAttr1: 0,
@@ -62,6 +82,7 @@ class App extends Component {
   }
 
   render() {
+    const { saveList } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -72,6 +93,20 @@ class App extends Component {
           onSaveButtonClick={ this.ButtonClick }
         />
         <Card { ...this.state } />
+        {saveList.map((element) => (
+          <div key={ element.nome }>
+            <Card
+              cardName={ element.nome }
+              cardImage={ element.imagem }
+              cardRare={ element.raro }
+              cardAttr1={ element.attr1 }
+              cardAttr2={ element.attr2 }
+              cardAttr3={ element.attr3 }
+              cardTrunfo={ element.trunfo }
+              cardDescription={ element.descriçao }
+            />
+          </div>
+        ))}
       </div>
     );
   }
