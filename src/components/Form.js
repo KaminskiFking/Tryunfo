@@ -14,6 +14,7 @@ class Form extends Component {
       isSaveButtonDisabled,
       onInputChange,
       onSaveButtonClick,
+      hasTrunfo,
     } = this.props;
 
     return (
@@ -83,21 +84,24 @@ class Form extends Component {
           <option value="raro">rare</option>
           <option value="muito raro">muito raro</option>
         </select>
-        <label htmlFor="cardTrunfo">
-          <input
-            name="cardTrunfo"
-            checked={ cardTrunfo }
-            data-testid="trunfo-input"
-            onChange={ onInputChange }
-            type="checkbox"
-          />
-        </label>
+        { hasTrunfo ? <p>Você já tem um Super Trunfo em seu baralho</p>
+          : (
+            <label htmlFor="cardTrunfo">
+              <input
+                name="cardTrunfo"
+                checked={ cardTrunfo }
+                data-testid="trunfo-input"
+                onChange={ onInputChange }
+                type="checkbox"
+              />
+            </label>
+          )}
         <button
           type="submit"
+          name="onSaveButtonClick"
           onClick={ onSaveButtonClick }
           disabled={ isSaveButtonDisabled }
           data-testid="save-button"
-          name="isSaveButtonDisabled"
         >
           Salvar
         </button>
@@ -117,7 +121,7 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
-
+  hasTrunfo: PropTypes.bool.isRequired,
 };
 
 export default Form;

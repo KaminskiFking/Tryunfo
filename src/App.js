@@ -7,25 +7,36 @@ class App extends Component {
     super();
     this.state = {
       cardName: '',
+      saveList: [],
+      hasTrunfo: false,
     };
   }
 
   onChange = ({ target }) => {
     const { name } = target;
+    const { hasTrunfo } = this.state;
     const value = (target.type === 'checkbox') ? target.checked : target.value;
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  ButtonClick = (e) => {
-    this.setState({ isSaveButtonDisabled: false });
-    e.preventdefault();
-
-    if (!this.state) {
-      this.setState({ isSaveButtonDisabled: true });
+    if (hasTrunfo === false) {
+      this.setState({ hasTrunfo: true });
     }
+    this.setState({
+      [name]: value });
   }
+
+  ButtonClick = (event) => {
+    event.preventDefault();
+
+    this.setState((prevState) => ({ saveList: [...prevState.saveList],
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
+      cardImage: '',
+      cardRare: 'normal',
+      cardTrunfo: false,
+    }));
+  };
 
   stateDisabled = () => {
     const maxCardAttr = 210;
@@ -51,14 +62,14 @@ class App extends Component {
   }
 
   render() {
-    const { cardName } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
         <Form
-          value={ cardName }
+          { ...this.state }
           onInputChange={ this.onChange }
           isSaveButtonDisabled={ this.stateDisabled() }
+          onSaveButtonClick={ this.ButtonClick }
         />
         <Card { ...this.state } />
       </div>
