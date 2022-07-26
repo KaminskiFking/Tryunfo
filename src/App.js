@@ -19,16 +19,47 @@ class App extends Component {
   }
 
   ButtonClick = (e) => {
-    this.setState({ isSaveButtonDisabled: true });
+    this.setState({ isSaveButtonDisabled: false });
     e.preventdefault();
-  };
+
+    if (!this.state) {
+      this.setState({ isSaveButtonDisabled: true });
+    }
+  }
+
+  stateDisabled = () => {
+    const maxCardAttr = 210;
+    const max = 90;
+    const min = 0;
+
+    const { cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+    } = this.state;
+
+    if (cardName.length !== 0 && cardDescription && cardImage
+    && Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3) <= maxCardAttr
+    && Number(cardAttr1) <= max && Number(cardAttr2) <= max
+    && Number(cardAttr3) <= max && Number(cardAttr1) >= min
+    && Number(cardAttr2) >= min && Number(cardAttr3) >= min) {
+      return false;
+    }
+    return true;
+  }
 
   render() {
     const { cardName } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
-        <Form value={ cardName } onInputChange={ this.onChange } />
+        <Form
+          value={ cardName }
+          onInputChange={ this.onChange }
+          isSaveButtonDisabled={ this.stateDisabled() }
+        />
         <Card { ...this.state } />
       </div>
     );
